@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+import { getCollection } from "astro:content";
+import createSlug from "../lib/createSlug";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const last_posts = posts.slice(0, 3);
+---
+
+<BaseLayout sideBarActiveItemID="home">
+  <div class="pb-12 mt-5">
+    <div class="text-xl py-1">Hey there 👋</div>
+    <div class="text-5xl font-bold">I'm Otourou Da Costa</div>
+    <div class="text-3xl py-3 font-bold">
+      Senior iOS developer and tech enthusiast.
+    </div>
+    <div class="py-2">
+      <text class="text-lg">
+        I'm a software engineer based in Paris, France. My passion lies in
+        mobile development and open source technologies. I'm also interested in
+        artificial intelligence, video games, and traveling.
+      </text>
+    </div>
+  </div>
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-2">My last projects {"</>"}</div>
+  </div>
+
+  <HorizontalCard
+    title="You Summy"
+    img="/you_summy.png"
+    desc="YouSummy is an iOS app that allows you to summarize YouTube videos."
+    url="https://apps.apple.com/app/you-summy/id6450893189"
+    badge="NEW"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="African Names"
+    img="/african_names.png"
+    desc="African Names is an iOS app that allows you to discover African names."
+    url="https://github.com/Tooflex/african-names"
+    badge="OFFLINE"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Rap Quiz"
+    img="/rap_quiz.png"
+    desc="Rap Quiz is an iOS app that allows you to test your knowledge of rap."
+    url="#"
+  />
+</BaseLayout>
