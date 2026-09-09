@@ -12,12 +12,14 @@ export interface Props {
 
 const { title, description, image = '/profile.jpeg', ogType = 'website' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#1d232a" />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
@@ -29,24 +31,40 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={ogType} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content="Otourou Da Costa" />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageURL} />
+<meta name="twitter:image:alt" content={title} />
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Otourou Da Costa',
-  url: 'https://otouroudacosta.dev/',
-  jobTitle: 'Senior iOS Developer',
-  address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
-  sameAs: ['https://github.com/Tooflex', 'https://fr.linkedin.com/in/otourou-da-costa-65815b59']
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://otouroudacosta.dev/#person',
+      name: 'Otourou Da Costa',
+      url: 'https://otouroudacosta.dev/',
+      jobTitle: 'Senior iOS Developer',
+      image: 'https://otouroudacosta.dev/profile.jpeg',
+      address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
+      sameAs: ['https://github.com/Tooflex', 'https://fr.linkedin.com/in/otourou-da-costa-65815b59']
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://otouroudacosta.dev/#website',
+      url: 'https://otouroudacosta.dev/',
+      name: 'Otourou Da Costa | Senior iOS Developer in Paris',
+      publisher: { '@id': 'https://otouroudacosta.dev/#person' }
+    }
+  ]
 })} />
